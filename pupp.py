@@ -3,7 +3,6 @@ import json
 from pyppeteer import launch
 from pyppeteer_stealth import stealth
 import pandas as pd
-import numpy as np
 
 async def main():
     browser = await launch(headless=True)

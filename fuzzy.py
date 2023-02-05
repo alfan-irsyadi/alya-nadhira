@@ -1,9 +1,5 @@
-import numpy as np
 import pandas as pd
 from datetime import datetime
-import base64
-from io import BytesIO
-from matplotlib.figure import Figure
 import pupp
 
 class fuzzy:
@@ -58,46 +54,46 @@ class fuzzy:
         del a        
     def forecast(self):
         return self.prediksi[self.data['Fuzzifikasi'][len(self.data)]]
-    def plot(self):
-        fig = Figure()
-        ax = fig.subplots()
-        # ax.plot(self.data.Date, self.data.Price)
-        up = self.df[self.df.Price >= self.df.Open].iloc[-12:]
+    # def plot(self):
+    #     fig = Figure()
+    #     ax = fig.subplots()
+    #     # ax.plot(self.data.Date, self.data.Price)
+    #     up = self.df[self.df.Price >= self.df.Open].iloc[-12:]
   
-        # "down" dataframe will store the self.data
-        # when the closing stock price is
-        # lesser than the Opening stock prices
-        down = self.df[self.df.Price < self.df.Open].iloc[-12:]
+    #     # "down" dataframe will store the self.data
+    #     # when the closing stock price is
+    #     # lesser than the Opening stock prices
+    #     down = self.df[self.df.Price < self.df.Open].iloc[-12:]
         
-        # When the stock prices have decreased, then it
-        # will be represented by blue color candlestick
-        col1 = 'green'
+    #     # When the stock prices have decreased, then it
+    #     # will be represented by blue color candlestick
+    #     col1 = 'green'
         
-        # When the stock prices have increased, then it 
-        # will be represented by green color candlestick
-        col2 = 'red'
+    #     # When the stock prices have increased, then it 
+    #     # will be represented by green color candlestick
+    #     col2 = 'red'
         
-        # Setting width of candlestick elements
-        width = 5
-        width2 = .5
+    #     # Setting width of candlestick elements
+    #     width = 5
+    #     width2 = .5
         
-        # Plotting up prices of the stock
-        ax.bar(up.Date, up.Price-up.Open, width, bottom=up.Open, color=col1)
-        ax.bar(up.Date, up.High-up.Price, width2, bottom=up.Price, color=col1)
-        ax.bar(up.Date, up.Low-up.Open, width2, bottom=up.Open, color=col1)
+    #     # Plotting up prices of the stock
+    #     ax.bar(up.Date, up.Price-up.Open, width, bottom=up.Open, color=col1)
+    #     ax.bar(up.Date, up.High-up.Price, width2, bottom=up.Price, color=col1)
+    #     ax.bar(up.Date, up.Low-up.Open, width2, bottom=up.Open, color=col1)
         
-        # Plotting down prices of the stock
-        ax.bar(down.Date, down.Price-down.Open, width, bottom=down.Open, color=col2)
-        ax.bar(down.Date, down.High-down.Open, width2, bottom=down.Open, color=col2)
-        ax.bar(down.Date, down.Low-down.Price, width2, bottom=down.Price, color=col2)
+    #     # Plotting down prices of the stock
+    #     ax.bar(down.Date, down.Price-down.Open, width, bottom=down.Open, color=col2)
+    #     ax.bar(down.Date, down.High-down.Open, width2, bottom=down.Open, color=col2)
+    #     ax.bar(down.Date, down.Low-down.Price, width2, bottom=down.Price, color=col2)
         
-        # rotating the x-axis tick labels at 30degree 
-        # towards right
-        # ax.set_xticklabels(rotation=30, ha='right')
-        # fig.show()
-        # Save it to a temporary buffer.
-        buf = BytesIO()
-        fig.savefig(buf, format="png")
-        # Embed the result in the html output.
-        data = base64.b64encode(buf.getbuffer()).decode("ascii")
-        return data
+    #     # rotating the x-axis tick labels at 30degree 
+    #     # towards right
+    #     # ax.set_xticklabels(rotation=30, ha='right')
+    #     # fig.show()
+    #     # Save it to a temporary buffer.
+    #     buf = BytesIO()
+    #     fig.savefig(buf, format="png")
+    #     # Embed the result in the html output.
+    #     data = base64.b64encode(buf.getbuffer()).decode("ascii")
+    #     return data
