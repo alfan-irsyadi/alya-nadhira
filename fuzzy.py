@@ -1,28 +1,42 @@
+from bs4 import BeautifulSoup
 import pandas as pd
 from datetime import datetime
-import pupp
+import math
+import numpy as np
+import requests
+import json
+
 
 class fuzzy:
-    def __init__(self, D1=0, D2=70, start="2020-01-01", end="2022-12-31"):        
+    def __init__(self, D1=0, D2=70, start="2020-01-01", end="2022-12-31"):
+        url = "https://api.investing.com/api/financialdata/101599/historical/chart/?period=P5Y&interval=P1W&pointscount=120"
+        proxy = "http://8b80c78b6cdd52c1ad2d302bf47c37f17adec017:antibot=true@proxy.zenrows.com:8001"
+        proxies = {"http": proxy, "https": proxy}
+        response = requests.get(url, proxies=proxies, verify=False)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        text = soup.find('pre').get_text()
+        data = json.loads(text)['data']
+        data = pd.DataFrame(
+            data, columns=['Date', 'Open', 'High', 'Low', 'Price', 'Vol', '-'])
         # self.df = yf.download("PTBA.JK", start="2020-01-01", end="2022-12-31")
-        self.df = pupp.data.copy()
-        self.df.loc[:,'Date'] = pd.to_datetime(self.df.Date, unit='ms')
-        start = datetime.strptime(start,'%Y-%m-%d')
-        end = datetime.strptime(end,'%Y-%m-%d')
-        self.df = self.df[self.df.Date>=start]
-        self.df = self.df[self.df.Date<=end].reset_index(drop=True)
+        self.df = data.copy()
+        self.df.loc[:, 'Date'] = pd.to_datetime(self.df.Date, unit='ms')
+        start = datetime.strptime(start, '%Y-%m-%d')
+        end = datetime.strptime(end, '%Y-%m-%d')
+        self.df = self.df[self.df.Date >= start]
+        self.df = self.df[self.df.Date <= end].reset_index(drop=True)
         # self.df = pd.read_csv(filename, thousands=',')
         self.U = [self.df.Price.min()-D1, self.df.Price.max()+D2]
         self.R = self.U[1]-self.U[0]
-        self.K = int(np.round(1+3.322*np.log10(len(self.df)),0))
+        self.K = int(round(1+3.322*math.log10(len(self.df))))
         self.I = self.R/self.K
         self.bb = [self.U[0]]
-        self.ba = [self.U[0]+self.I]        
-        for i in range(1,self.K):
+        self.ba = [self.U[0]+self.I]
+        for i in range(1, self.K):
             self.bb.append(self.bb[i-1]+self.I)
-            self.ba.append(self.ba[i-1]+self.I)        
-        self.labels=["A"+str(i) for i in range(1,self.K+1)]
-         
+            self.ba.append(self.ba[i-1]+self.I)
+        self.labels = ["A"+str(i) for i in range(1, self.K+1)]
+
     def fit(self):
         cat = pd.cut(self.df.Price, bins=[*self.bb, self.ba[self.K-1]], right=False, labels=self.labels)
         self.df['Fuzzifikasi'] = cat
