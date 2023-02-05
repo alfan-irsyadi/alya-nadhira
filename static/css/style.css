@@ -27,7 +27,7 @@
 #title {
     color: var(--color4);
     font-weight: bold;
-    font-size: 36pt;
+    font-size: 24pt;
 }
 
 
@@ -42,7 +42,7 @@
 }
 
 .item-form>input {
-    width: 600px;
+    width: 500px;
 
 }
 
@@ -55,8 +55,8 @@
 .item-form.row>* {
     border: none;
     border-radius: 50px;
-    padding: 20px;
-    font-size: 18px;
+    padding: 5px 20px;
+    font-size: 14pt;
 }
 
 .fab,
@@ -72,7 +72,7 @@
 }
 
 .logo>* {
-    font-size: 24pt;
+    font-size: 14pt;
     color: white;
 }
 
@@ -81,7 +81,7 @@
 }
 
 .id>span {
-    font-size: 16pt;
+    font-size: 14pt;
     color: white;
     padding: 0 20px;
 }
@@ -91,9 +91,12 @@
 }
 
 
-/* .footer{
-    background-color: white;   
-} */
+.footer{
+    /* background-color: white;    */
+    justify-content: space-between;
+    align-items: center;
+    width: 200px;
+}
 
 .footer>i {
     margin: 20px;
@@ -118,7 +121,7 @@
 
 #desc-text {
     color: white;
-    font-size: 16pt;
+    font-size: 14pt;
 }
 
 /* collapse sidebar*/
@@ -129,9 +132,8 @@
     z-index: 1;
     top: 0;
     right: 0;
-    background-color: #333;
-    
-    overflow-x: hidden;
+    background-color: #333;   
+    overflow-x:hidden;
     transition: 0.5s;
     padding-top: 60px;
 }
@@ -139,7 +141,7 @@
 .sidebar a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 15px;
     color: #818181;
     display: block;
     transition: 0.3s;
@@ -184,12 +186,12 @@
     background-color: var(--color1);
     color: white;
     cursor: pointer;
-    padding: 18px;
+    padding: 10px;
     width: 100%;
     border: none;
     text-align: left;
     outline: none;
-    font-size: 24px;
+    font-size: 14pt;
 }
 
 .active,
@@ -210,7 +212,7 @@
 }
 
 .menu-item {
-    font-size: 24px;
+    font-size: 14pt;    
 }
 
 /* dataframe */
@@ -259,4 +261,12 @@
 
 #about > *{
     margin: 20px;    
+}
+
+#chart{
+    height: 400px;
+}
+
+.last{
+    padding-bottom: 100px;
 }

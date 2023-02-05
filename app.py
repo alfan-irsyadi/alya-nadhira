@@ -16,3 +16,8 @@ def index():
         hasil = pd.DataFrame([[date1, fz.forecast()]], columns=['Tanggal','Harga'])
         print(hasil)
         return render_template('home1.html', fz=fz, method=request.method, max=date.today().strftime('%Y-%m-%d'), hasil=hasil)
+        
+    
+
+if __name__ == '__main__':
+    app.run(debug=True)

@@ -27,6 +27,10 @@
                     {%endfor%}
                 </div>
             </div>
+            <button class="collapsible  data">Grafik</button>
+            <div class="content">
+                <img src="data:image/png;base64,{{fz.plot()}}" alt="" id="chart">
+            </div>
             <button class="collapsible">About</button>
             <div class="content menu-item">
                 <div class="column container" id="about">
@@ -39,18 +43,19 @@
             <div class="content menu-item">
                 Jl ....
             </div>
-            <button class="collapsible">Pivot Table</button>
+            <button class="collapsible  data">Pivot Table</button>
             <div class="content">
                 {% for table in [fz.pivot.to_html(header="true")]%}
                 {{table|safe}}
                 {%endfor%}
             </div>
-            <button class="collapsible">Data Table</button>
+            <button class="collapsible data">Data Table</button>
             <div class="content">
                 {% for table in [fz.data.to_html(header="true")]%}
                 {{table|safe}}
                 {%endfor%}
             </div>
+            
         </div>
         {%endif%}
 
@@ -67,7 +72,7 @@
             </div>
             <div class="id">
                 <span>190803071</span>
-                <button class="openbtn" onclick="openNav()">☰ Open Sidebar</button>
+                {%if method=="POST"%}<button class="openbtn" onclick="openNav()">☰ Open Sidebar</button>{%endif%}
             </div>
         </div>
         <div class="container column">
@@ -91,15 +96,15 @@
                     </div>
                 </form>
                 <!-- <div class="chart">
-                    <img src="data:image/png;base64,{{fz.plot()}}" alt="" id="chart">
+                
                 </div> -->
 
             </div>
 
-            <div class="footer">
-                <i class="fab fa-instagram"></i>
-                <i class="fab fa-whatsapp"></i>
-                <i class="fab fa-facebook"></i>
+            <div class="footer row">
+                <a href="http://instagram.com/alfanirsyadi_"><i class="fab fa-instagram"></i></a>
+                <a href="http://wa.me/6285163608030"><i class="fab fa-whatsapp"></i></a>
+                <a href="http://facebook.com/alfan.irsyadi.3"><i class="fab fa-facebook"></i></a>
             </div>
         </div>
     </div>
@@ -119,13 +124,33 @@
             }
         });
     }
+    coll = document.getElementsByClassName("data");    
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            // this.classList.toggle("active");
+            let lebar = document.getElementById("mySidebar").style.width
+            if (lebar=='400px') {
+                document.getElementById("mySidebar").style.width = '700px'
+            } else {
+                document.getElementById("mySidebar").style.width = '400px'
+            }
+        });
+    }
+    
 
 </script>
 <script>
     function openNav() {
-        document.getElementById("mySidebar").style.width = "700px";
-        document.getElementById("main").style.marginRight = "700px";
+        document.getElementById("mySidebar").style.width = "400px";
+        document.getElementById("main").style.marginRight = "400px";
     }
+    
+    function wide(){
+        document.getElementById("mySidebar").style.width = "700px";        
+    }
+
+
 
     function closeNav() {
         document.getElementById("mySidebar").style.width = "0";

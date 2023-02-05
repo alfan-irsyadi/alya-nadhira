@@ -3,17 +3,20 @@ import pandas as pd
 from datetime import datetime
 import math
 import numpy as np
-import requests
+import http.client
+import base64
+from io import BytesIO
+from matplotlib import pyplot as plt
 import json
 
 
 class fuzzy:
-    def __init__(self, D1=0, D2=70, start="2020-01-01", end="2022-12-31"):
-        url = "https://api.investing.com/api/financialdata/101599/historical/chart/?period=P5Y&interval=P1W&pointscount=120"
-        proxy = "http://8b80c78b6cdd52c1ad2d302bf47c37f17adec017:antibot=true@proxy.zenrows.com:8001"
-        proxies = {"http": proxy, "https": proxy}
-        response = requests.get(url, proxies=proxies, verify=False)
-        soup = BeautifulSoup(response.text, 'html.parser')
+    def __init__(self, D1=0, D2=70, start="2020-01-01", end="2022-12-31"):        
+        conn = http.client.HTTPSConnection("api.scrapingant.com")
+        conn.request("GET", "/v2/general?url=https%3A%2F%2Fapi.investing.com%2Fapi%2Ffinancialdata%2F101599%2Fhistorical%2Fchart%2F%3Fperiod%3DP5Y%26interval%3DP1W%26pointscount%3D120&x-api-key=670698b978da4d5f813e0b613dffe0b1&wait_for_selector=pre")
+        res = conn.getresponse()
+        data = res.read()
+        soup = BeautifulSoup(data.decode("utf-8"), 'html.parser')
         text = soup.find('pre').get_text()
         data = json.loads(text)['data']
         data = pd.DataFrame(
@@ -68,46 +71,18 @@ class fuzzy:
         del a        
     def forecast(self):
         return self.prediksi[self.data['Fuzzifikasi'][len(self.data)]]
-    # def plot(self):
-    #     fig = Figure()
-    #     ax = fig.subplots()
-    #     # ax.plot(self.data.Date, self.data.Price)
-    #     up = self.df[self.df.Price >= self.df.Open].iloc[-12:]
-  
-    #     # "down" dataframe will store the self.data
-    #     # when the closing stock price is
-    #     # lesser than the Opening stock prices
-    #     down = self.df[self.df.Price < self.df.Open].iloc[-12:]
-        
-    #     # When the stock prices have decreased, then it
-    #     # will be represented by blue color candlestick
-    #     col1 = 'green'
-        
-    #     # When the stock prices have increased, then it 
-    #     # will be represented by green color candlestick
-    #     col2 = 'red'
-        
-    #     # Setting width of candlestick elements
-    #     width = 5
-    #     width2 = .5
-        
-    #     # Plotting up prices of the stock
-    #     ax.bar(up.Date, up.Price-up.Open, width, bottom=up.Open, color=col1)
-    #     ax.bar(up.Date, up.High-up.Price, width2, bottom=up.Price, color=col1)
-    #     ax.bar(up.Date, up.Low-up.Open, width2, bottom=up.Open, color=col1)
-        
-    #     # Plotting down prices of the stock
-    #     ax.bar(down.Date, down.Price-down.Open, width, bottom=down.Open, color=col2)
-    #     ax.bar(down.Date, down.High-down.Open, width2, bottom=down.Open, color=col2)
-    #     ax.bar(down.Date, down.Low-down.Price, width2, bottom=down.Price, color=col2)
-        
-    #     # rotating the x-axis tick labels at 30degree 
-    #     # towards right
-    #     # ax.set_xticklabels(rotation=30, ha='right')
-    #     # fig.show()
-    #     # Save it to a temporary buffer.
-    #     buf = BytesIO()
-    #     fig.savefig(buf, format="png")
-    #     # Embed the result in the html output.
-    #     data = base64.b64encode(buf.getbuffer()).decode("ascii")
-    #     return data
+    def plot(self):        
+        fig, ax = plt.subplots()
+        data = self.data.iloc[-40:]
+        plt.xlabel('Month')
+        # plt.ylabel('Temp')
+        plt.title('Harga Saham PT Bukit Asam TBK 40 Minggu Terakhir')
+        ax.plot(data['Date'], data['Price'], color='blue')
+        ax.plot(data['Date'], data['Peramalan'], color='red')
+        ax.legend(['Harga Asli', 'Harga Ramalan'])        
+        plt.setp(ax.get_xticklabels(), rotation=30);
+        buf = BytesIO()
+        fig.savefig(buf, format="png")
+        # Embed the result in the html output.
+        data = base64.b64encode(buf.getbuffer()).decode("ascii")
+        return data
