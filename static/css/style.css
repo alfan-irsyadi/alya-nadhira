@@ -1,0 +1,262 @@
+:root {
+    --color1: #5D3891;
+    --color2: #F99417;
+    --color3: #E8E2E2;
+    --color4: #F5F5F5;
+}
+
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+    color: black;
+}
+
+
+.body {
+    background-color: #5D3891;
+    opacity: 1;
+    background-image: radial-gradient(circle at bottom center, #E8E2E2, #5D3891), repeating-radial-gradient(circle at bottom center, #E8E2E2, #E8E2E2, 40px, transparent 80px, transparent 40px);
+    background-blend-mode: multiply;
+    height: 100vh;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#title {
+    color: var(--color4);
+    font-weight: bold;
+    font-size: 36pt;
+}
+
+
+.header {
+    text-align: center;
+
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.item-form>input {
+    width: 600px;
+
+}
+
+.item-form>button {
+    background-color: #F99417;
+    width: 200px;
+    margin-left: 40px;
+}
+
+.item-form.row>* {
+    border: none;
+    border-radius: 50px;
+    padding: 20px;
+    font-size: 18px;
+}
+
+.fab,
+.far {
+    font-size: 24pt;
+    color: white;
+}
+
+.navbar {
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo>* {
+    font-size: 24pt;
+    color: white;
+}
+
+.logo {
+    padding: 20px;
+}
+
+.id>span {
+    font-size: 16pt;
+    color: white;
+    padding: 0 20px;
+}
+
+.logo>span {
+    margin-left: 20px;
+}
+
+
+/* .footer{
+    background-color: white;   
+} */
+
+.footer>i {
+    margin: 20px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
+.container {
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    padding: 40px 0px;
+}
+
+.desc {
+    width: 800px;
+    text-align: center;
+}
+
+#desc-text {
+    color: white;
+    font-size: 16pt;
+}
+
+/* collapse sidebar*/
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #333;
+    
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+}
+
+.openbtn:hover {
+    background-color: #444;
+}
+
+
+/* collapse table */
+.content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+}
+
+.collapsible {
+    background-color: var(--color1);
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 24px;
+}
+
+.active,
+.collapsible:hover {
+    background-color: var(--color1);
+}
+
+.collapsible:after {
+    content: '\002B';
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212";
+}
+
+.menu-item {
+    font-size: 24px;
+}
+
+/* dataframe */
+.dataframe {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.dataframe thead tr {
+    background-color: var(--color1);
+    color: #ffffff;
+    text-align: left;
+}
+
+.dataframe th,
+.dataframe td {
+    color: black;
+    padding: 12px 15px;
+}
+
+.dataframe>thead th {
+    text-align: center;
+    color: var(--color4);
+}
+
+.dataframe tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.dataframe tbody tr:nth-of-type(even) {
+    background-color: var(--color3);
+}
+
+.dataframe tbody tr:last-of-type {
+    border-bottom: 2px solid var(--color1);
+}
+
+.dataframe tbody tr.active-row {
+    font-weight: bold;
+    color: var(--color2);
+}
+
+#about > *{
+    margin: 20px;    
+}

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/fontawesome.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+</head>
+
+<body>
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        {%if method=="POST"%}
+        <div class="section">
+            <button class="collapsible hasil">Hasil Peramalan</button>
+            <div class="content menu-item">
+                <div class="column container">
+                    {% for table in [hasil.to_html(header="true")]%}
+                    {{table|safe}}
+                    {%endfor%}
+                </div>
+            </div>
+            <button class="collapsible">About</button>
+            <div class="content menu-item">
+                <div class="column container" id="about">
+                    <img src="https://portal.usu.ac.id/photos/190803071" alt="" srcset=""  style="width: 100px;">
+                    <div>Alya Nadhira Nur</div>
+                    <div>190803071</div>
+                </div>
+            </div>
+            <button class="collapsible">Contact</button>
+            <div class="content menu-item">
+                Jl ....
+            </div>
+            <button class="collapsible">Pivot Table</button>
+            <div class="content">
+                {% for table in [fz.pivot.to_html(header="true")]%}
+                {{table|safe}}
+                {%endfor%}
+            </div>
+            <button class="collapsible">Data Table</button>
+            <div class="content">
+                {% for table in [fz.data.to_html(header="true")]%}
+                {{table|safe}}
+                {%endfor%}
+            </div>
+        </div>
+        {%endif%}
+
+    </div>
+    <div class="body column" id="main">
+        <!-- <nav class="navbar">
+            <i class="fa-regular fa-chart-waterfall"></i>
+            <i class="fa fa-car" style="font-size: 48pt;"></i>
+        </nav> -->
+        <div class="navbar row">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <span>Alya Nadhira Nur</span>
+            </div>
+            <div class="id">
+                <span>190803071</span>
+                <button class="openbtn" onclick="openNav()">☰ Open Sidebar</button>
+            </div>
+        </div>
+        <div class="container column">
+            <div class="header">
+                <span id="title">PERAMALAN HARGA SAHAM</span><br>
+                <span id="title">PT BUKIT ASAM TBK</span>
+            </div>
+            <div class="desc">
+                <span id="desc-text">dapatkan harga saham PT BUKIT ASAM TBK dengan tanggal tertentu (data latih dimulai
+                    dari tanggal 01-01-2020)</span>
+            </div>
+            <div class="row">
+                <form action="/" method="post" class="form-input">
+                    <div class="item-form row">
+                        <input type="date" name="end" max={{today}}>
+                        <button type="submit" id="btn-submit" class="item-form">Ramalkan</button>
+                    </div>
+                    <div class="item-form">
+
+                        <div style="width: 100%;"></div>
+                    </div>
+                </form>
+                <!-- <div class="chart">
+                    <img src="data:image/png;base64,{{fz.plot()}}" alt="" id="chart">
+                </div> -->
+
+            </div>
+
+            <div class="footer">
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-whatsapp"></i>
+                <i class="fab fa-facebook"></i>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    }
+
+</script>
+<script>
+    function openNav() {
+        document.getElementById("mySidebar").style.width = "700px";
+        document.getElementById("main").style.marginRight = "700px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style.marginRight = "0";
+    }
+    var method = "{{method}}"
+    if (method == "POST") {
+        openNav();
+        var col = document.getElementsByClassName('hasil');
+        for (i = 0; i < col.length; i++) {
+            col[i].classList.toggle("active");
+            var content = col[i].nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        }
+    }
+</script>
+<script src="https://kit.fontawesome.com/a9b5196514.js" crossorigin="anonymous"></script>
+<script src="stylesheet" href="{{url_for('static',filename='js/fontawesome.js')}}" crossorigin="anonymous"></script>
+
+</html>
