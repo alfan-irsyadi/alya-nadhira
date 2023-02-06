@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup
+# from bs4 import BeautifulSoup
 import pandas as pd
 from datetime import datetime
 import math
@@ -8,6 +8,9 @@ import base64
 from io import BytesIO
 from matplotlib import pyplot as plt
 import json
+from lxml import html
+text = "<pre style='a'>aa</pre>"
+
 
 
 class fuzzy:
@@ -16,8 +19,11 @@ class fuzzy:
         conn.request("GET", "/v2/general?url=https%3A%2F%2Fapi.investing.com%2Fapi%2Ffinancialdata%2F101599%2Fhistorical%2Fchart%2F%3Fperiod%3DP5Y%26interval%3DP1W%26pointscount%3D120&x-api-key=670698b978da4d5f813e0b613dffe0b1&wait_for_selector=pre")
         res = conn.getresponse()
         data = res.read()
-        soup = BeautifulSoup(data.decode("utf-8"), 'html.parser')
-        text = soup.find('pre').get_text()
+        text = data.decode("utf-8")
+        tree = html.fromstring(text)
+        text = [td.text for td in tree.xpath("//pre")][0]
+        # soup = BeautifulSoup(data.decode("utf-8"), 'html.parser')
+        # text = soup.find('pre').get_text()
         data = json.loads(text)['data']
         data = pd.DataFrame(
             data, columns=['Date', 'Open', 'High', 'Low', 'Price', 'Vol', '-'])
