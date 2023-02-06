@@ -1,4 +1,3 @@
-# from bs4 import BeautifulSoup
 import pandas as pd
 from datetime import datetime
 import math
@@ -9,9 +8,6 @@ from io import BytesIO
 from matplotlib import pyplot as plt
 import json
 from lxml import html
-text = "<pre style='a'>aa</pre>"
-
-
 
 class fuzzy:
     def __init__(self, D1=0, D2=70, start="2020-01-01", end="2022-12-31"):        
